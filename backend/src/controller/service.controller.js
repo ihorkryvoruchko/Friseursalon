@@ -1,7 +1,7 @@
 import { fetchAllServices } from "../service/service.service.js";
 
-export function getAllServices(req, res) {
-    const services = fetchAllServices()
-
+export async function getAllServices(req, res) {
+    const services = await fetchAllServices()
+    
     res.json(services)
 }

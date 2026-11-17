@@ -1,6 +1,7 @@
 import { selectAllServices } from "../repository/service.repository.js"
 
-export function fetchAllServices() {
-    const services = selectAllServices()
+export async function fetchAllServices() {
+    const services = await selectAllServices()
+    
     return services
 }

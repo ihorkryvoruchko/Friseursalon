@@ -1,5 +1,7 @@
 import express from 'express'
 import { serviceRouter } from './src/router/service.router.js'
+import { employeeRouter } from './src/router/employee.router.js'
+import { slotRouter } from './src/router/slot.router.js'
 import cors from 'cors'
 import "dotenv/config"
 
@@ -12,6 +14,8 @@ app.use(cors())
 app.use(express.json())
 
 app.use(VERSION, serviceRouter)
+app.use(VERSION, employeeRouter)
+app.use(VERSION, slotRouter)
 
 app.listen(PORT, () => {
     console.log(`Server run in ${PORT}`)
