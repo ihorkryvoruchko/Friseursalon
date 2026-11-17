@@ -1,5 +1,5 @@
 import express from 'express'
-import { userRouter } from './src/router/user.router.js'
+import { serviceRouter } from './src/router/service.router.js'
 import cors from 'cors'
 import "dotenv/config"
 
@@ -11,7 +11,7 @@ const VERSION = '/api/v1'
 app.use(cors())
 app.use(express.json())
 
-app.use(VERSION, userRouter)
+app.use(VERSION, serviceRouter)
 
 app.listen(PORT, () => {
     console.log(`Server run in ${PORT}`)
