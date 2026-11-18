@@ -1,5 +1,6 @@
 import { selectAppointmentByDateAndEmployeeId } from '../repository/appointment.repository.js'
 import { getTotalServiceDurationByIDs } from '../repository/service.repository.js'
+import { minutesToTime, timeToMinutes } from '../../util/timeMinutesConverter.js'
 
 export async function fetchAvailebleTimeSlots(employeeId, date, serviceIds) {
     const serviceDuration = await getTotalServiceDurationByIDs(serviceIds)
@@ -10,7 +11,7 @@ export async function fetchAvailebleTimeSlots(employeeId, date, serviceIds) {
     return checkServiceDuration(serviceDuration, slots)
 }
 
-async function generateTimeSlots(date, employeeId, startTime, endTime, stepMinutes = 15) {
+export async function generateTimeSlots(date, employeeId, startTime, endTime, stepMinutes = 15) {
   const slots = []
   const appointments = await selectAppointmentByDateAndEmployeeId(date, employeeId)
 
@@ -31,20 +32,7 @@ async function generateTimeSlots(date, employeeId, startTime, endTime, stepMinut
   return slots
 }
 
-function minutesToTime(totalMinutes) {
-  const hours = Math.floor(totalMinutes / 60)
-  const minutes = totalMinutes % 60
-
-  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:00`
-}
-
-function timeToMinutes(timeStr) {
-  const [hours, minutes] = timeStr.split(':').map(Number)
-
-  return hours * 60 + minutes
-}
-
-function checkServiceDuration(serviceDuration, slots) {
+export function checkServiceDuration(serviceDuration, slots) {
   const duration = Number(serviceDuration[0].total_duration) || 0;
 
   for (let i = 0; i < slots.length; i++) {

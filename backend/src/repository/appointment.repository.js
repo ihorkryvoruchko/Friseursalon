@@ -12,3 +12,55 @@ export async function selectAppointmentByDateAndEmployeeId(date, employeeId) {
         console.log("Fehler bei employee:" + error.message)
     }
 }
+
+export async function insertNewAppointment(appointment) {
+    const connection = await pool.getConnection()
+
+    try {
+        await connection.beginTransaction()
+
+        const [client] = await connection.query(`INSERT INTO client (name, phone, email) VALUES (?, ?, ?);`, 
+            [appointment.client.name, appointment.client.phone, appointment.client.email]
+        )
+        
+        const [appoint] = await connection.query(
+            `INSERT INTO appointment (client_id, employee_id, start_time, end_time, status, cancel_code) VALUES (?, ?, ?, ?, ?, ?);`,
+            [client.insertId, appointment.employeeId, appointment.startDateTime, appointment.endDateTime, 'gebucht', appointment.cancelCode]
+        )
+
+        for (const serviceId of appointment.serviceIds) {
+            const [appointmentService] = await connection.query(
+                `INSERT INTO appointment_service (appointment_id, service_id) VALUES (?, ?); `,
+                [appoint.insertId, serviceId]
+            )
+        }
+
+        
+
+        await connection.commit()
+        
+        return appoint
+
+    } catch (err) {
+        await connection.rollback()
+        console.error('Transaction Failed:', err)
+        throw Error("Fehler bei der Buchung")
+    } finally {
+        connection.release()
+    }
+
+}
+
+export async function patchStatusAppoinmentByCancelCode(cancelCode) {
+    try {
+        const [appointment] = await pool.query(
+            `UPDATE appointment SET status = "erledigt" WHERE cancel_code = ?;`,  
+            [cancelCode]
+        )
+       
+        return appointment
+    } catch(error) {
+        console.log("Fehler bei der Buchungserledigung:" + error.message)
+        throw Error("Fehler bei der Buchungserledigung")
+    }
+}
