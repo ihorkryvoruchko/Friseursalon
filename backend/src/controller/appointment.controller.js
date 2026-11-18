@@ -15,7 +15,7 @@ export async function cancelAppointment(req, res) {
         const { cancelCode } = req.body 
         await updateStatusAppointment(cancelCode)
 
-        res.status(204)
+        res.status(204).send()
     } catch (error) {
         res.status(401).json({message: error.message})
     }
