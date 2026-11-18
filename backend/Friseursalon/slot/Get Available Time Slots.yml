@@ -5,7 +5,14 @@ info:
 
 http:
   method: GET
-  url: http://localhost:3000/api/v1/slot/employee/1/service/1/date/2026-11-17
+  url: http://localhost:3000/api/v1/slot/employee/1/date/2026-11-17?service_ids=1&service_ids=2
+  params:
+    - name: service_ids
+      value: "1"
+      type: query
+    - name: service_ids
+      value: "2"
+      type: query
   auth: inherit
 
 settings:

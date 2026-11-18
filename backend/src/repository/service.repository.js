@@ -23,9 +23,8 @@ export async function selectAllServices() {
 
 export async function getTotalServiceDurationByIDs(serviceIds) {
     try {
-        console.log(serviceIds)
         const [services] = await pool.query(
-            `SELECT SUM(duration) FROM service WHERE id IN [?];`, [serviceIds]
+            `SELECT SUM(duration) AS total_duration FROM service WHERE id IN (?);`, [serviceIds]
         )
         
         return services
