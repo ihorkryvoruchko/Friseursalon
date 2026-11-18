@@ -50,3 +50,17 @@ export async function insertNewAppointment(appointment) {
     }
 
 }
+
+export async function patchStatusAppoinmentByCancelCode(cancelCode) {
+    try {
+        const [appointment] = await pool.query(
+            `UPDATE appointment SET status = "erledigt" WHERE cancel_code = ?;`,  
+            [cancelCode]
+        )
+       
+        return appointment
+    } catch(error) {
+        console.log("Fehler bei der Buchungserledigung:" + error.message)
+        throw Error("Fehler bei der Buchungserledigung")
+    }
+}

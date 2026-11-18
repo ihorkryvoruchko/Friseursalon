@@ -1,0 +1,21 @@
+info:
+  name: Cancel Appointment
+  type: http
+  seq: 1
+
+http:
+  method: PATCH
+  url: http://localhost:3000/api/v1/appointment/cancel
+  body:
+    type: json
+    data: |-
+      {
+        "cancelCode": "a2ca531c-eb17-4012-af91-a070b56cc3a1"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

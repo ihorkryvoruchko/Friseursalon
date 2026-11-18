@@ -1,5 +1,5 @@
-import { insertNewAppointment } from '../repository/appointment.repository.js'
-import { minutesToTime, timeToMinutes } from '../../util/timeMinutesConverter.js'
+import { insertNewAppointment, patchStatusAppoinmentByCancelCode } from '../repository/appointment.repository.js'
+import { minutesToTime, timeToMinutes, getNowDateTimeString } from '../../util/timeMinutesConverter.js'
 import { getTotalServiceDurationByIDs } from '../repository/service.repository.js'
 import { generateTimeSlots } from './slot.service.js'
 import crypto from 'node:crypto'
@@ -17,11 +17,11 @@ export async function setNewAppointment(appointment) {
     appointment.endDateTime = `${startDate} ${endTime}`
     appointment.cancelCode = crypto.randomUUID()
     
-    if(! await checkAppointmentIsAvailable(appointment, startDate, startTime, endTime)) {
+    if(! await checkAppointmentIsAvailable(appointment, startDate, startTime, endTime) || getNowDateTimeString() >= appointment.startDateTime) {
        throw Error("Appointment is unavailable!")
     }
 
-    appointment = await insertNewAppointment(appointment)
+    await insertNewAppointment(appointment)
 
     return appointment
 }
@@ -38,5 +38,15 @@ async function checkAppointmentIsAvailable(appointment, startDate, startTime, en
   }
   
   return isAvailable
+}
+
+export async function updateStatusAppointment(cancelCode) {
+  try {
+    const appointment = await patchStatusAppoinmentByCancelCode(cancelCode)
+
+    return
+  } catch (error) {
+    throw Error(error.message)
+  }
 }
 
