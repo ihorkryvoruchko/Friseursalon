@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminbuchung</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Online-Terminbuchung</h1>
+
+    <section class="card">
+      <h2>1. Leistungen auswählen</h2>
+      <div id="services-list" class="services-grid"></div>
+      <div id="services-summary" class="summary-bar"></div>
+    </section>
+
+    <section id="booking-details" class="card hidden">
+      <h2>2. Mitarbeiter & Datum wählen</h2>
+      <div class="controls-row">
+        <div class="field">
+          <label for="employee-select">Mitarbeiter</label>
+          <select id="employee-select">
+            <option value="">-- Bitte wählen --</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="date-input">Datum</label>
+          <input type="date" id="date-input">
+        </div>
+      </div>
+
+      <div id="slots-wrapper" class="slots-wrapper hidden">
+        <h3>3. Uhrzeit wählen</h3>
+        <div id="slots-list" class="slots-grid"></div>
+      </div>
+    </section>
+
+    <section id="client-section" class="card hidden">
+      <h2>4. Ihre Kontaktdaten</h2>
+      <form id="booking-form">
+        <div class="field">
+          <label for="client-name">Name</label>
+          <input type="text" id="client-name" required>
+        </div>
+        <div class="field">
+          <label for="client-phone">Telefon</label>
+          <input type="tel" id="client-phone" required>
+        </div>
+        <div class="field">
+          <label for="client-email">E-Mail</label>
+          <input type="email" id="client-email" required>
+        </div>
+        <button type="submit" id="submit-btn" class="btn-primary">Termin verbindlich buchen</button>
+      </form>
+    </section>
+
+    <section id="result-section" class="card result-card hidden">
+      <h2>Termin erfolgreich gebucht!</h2>
+      <div id="booking-result"></div>
+    </section>
+  </main>
+
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>

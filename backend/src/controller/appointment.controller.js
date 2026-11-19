@@ -12,7 +12,7 @@ export async function createAppointment(req, res) {
 
 export async function cancelAppointment(req, res) {
     try {
-        const { cancelCode } = req.body 
+        const { cancelCode } = req.params 
         await updateStatusAppointment(cancelCode)
 
         res.status(204).send()

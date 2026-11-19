@@ -14,9 +14,10 @@ export async function fetchAvailebleTimeSlots(employeeId, date, serviceIds) {
 export async function generateTimeSlots(date, employeeId, startTime, endTime, stepMinutes = 15) {
   const slots = []
   const appointments = await selectAppointmentByDateAndEmployeeId(date, employeeId)
-
+  console.log(appointments)
   for (let current = timeToMinutes(startTime); current + stepMinutes <= timeToMinutes(endTime); current += stepMinutes) {
-    for (const appointment of appointments) {
+    if (appointments.length > 0) {
+      for (const appointment of appointments) {
       let isAvailable = true
 
       if (current >= timeToMinutes(appointment.start_time) && current < timeToMinutes(appointment.end_time)) {
@@ -27,13 +28,20 @@ export async function generateTimeSlots(date, employeeId, startTime, endTime, st
         isAvailable
       })
     }
+    } else {
+      slots.push({
+        value: minutesToTime(current),
+        isAvailable: true
+      })
+    }
+    
   }
 
   return slots
 }
 
 export function checkServiceDuration(serviceDuration, slots) {
-  const duration = Number(serviceDuration[0].total_duration) || 0;
+  const duration = Number(serviceDuration[0].total_duration) || 0
 
   for (let i = 0; i < slots.length; i++) {
     let isRangeAvailable = true;
