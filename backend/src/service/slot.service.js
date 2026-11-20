@@ -14,7 +14,7 @@ export async function fetchAvailebleTimeSlots(employeeId, date, serviceIds) {
 export async function generateTimeSlots(date, employeeId, startTime, endTime, stepMinutes = 15) {
   const slots = []
   const appointments = await selectAppointmentByDateAndEmployeeId(date, employeeId)
-  console.log(appointments)
+  
   for (let current = timeToMinutes(startTime); current + stepMinutes <= timeToMinutes(endTime); current += stepMinutes) {
     if (appointments.length > 0) {
       for (const appointment of appointments) {
