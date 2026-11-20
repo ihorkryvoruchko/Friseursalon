@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS appointment (
     cancel_code VARCHAR(36) NOT NULL,
     FOREIGN KEY (client_id) REFERENCES client(id) ON DELETE RESTRICT,
     FOREIGN KEY (employee_id) REFERENCES employee(id) ON DELETE RESTRICT
+    
 );
 
 

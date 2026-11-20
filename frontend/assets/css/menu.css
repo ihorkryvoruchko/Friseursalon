@@ -1,0 +1,23 @@
+#horizontales-menu {
+  list-style-type: none;   
+  margin: 0;
+  padding: 0;
+  background-color: #333;
+  display: flex;          
+}
+
+#horizontales-menu li {
+  display: flex;
+  align-items: center;
+}
+
+#horizontales-menu a {
+  display: block;
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+#horizontales-menu a:hover {
+  background-color: #111;
+}
