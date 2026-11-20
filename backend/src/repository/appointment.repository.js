@@ -64,3 +64,5 @@ export async function patchStatusAppoinmentByCancelCode(cancelCode) {
         throw Error("Fehler bei der Buchungserledigung")
     }
 }
+
+

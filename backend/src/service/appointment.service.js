@@ -1,10 +1,12 @@
 import { insertNewAppointment, patchStatusAppoinmentByCancelCode } from '../repository/appointment.repository.js'
 import { minutesToTime, timeToMinutes, getNowDateTimeString } from '../../util/timeMinutesConverter.js'
 import { getTotalServiceDurationByIDs } from '../repository/service.repository.js'
+import { selectFreeEmployee } from '../repository/employee.repository.js'
 import { generateTimeSlots } from './slot.service.js'
 import crypto from 'node:crypto'
 
 export async function setNewAppointment(appointment) {
+    
     const totalDuration = await getTotalServiceDurationByIDs(appointment.serviceIds)
 
     const startDate = String(appointment.startDateTime.split(" ")[0])
@@ -17,13 +19,27 @@ export async function setNewAppointment(appointment) {
     appointment.endDateTime = `${startDate} ${endTime}`
     appointment.cancelCode = crypto.randomUUID()
     
-    if(! await checkAppointmentIsAvailable(appointment, startDate, startTime, endTime) || getNowDateTimeString() >= appointment.startDateTime) {
-       throw Error("Appointment is unavailable!")
+    if (!appointment.hasOwnProperty("employeeId") || appointment.employeeId === null) {
+      appointment.employeeId = await getRandomEmployeeId(appointment)
     }
 
+    if(! await checkAppointmentIsAvailable(appointment, startDate, startTime, endTime) || getNowDateTimeString() >= appointment.startDateTime) {
+       throw Error("Die Buchung ist leider nicht möglich!")
+    }
+    
     await insertNewAppointment(appointment)
 
     return appointment
+}
+
+async function getRandomEmployeeId(appointment) {
+  const employee = await selectFreeEmployee(appointment.startDateTime, appointment.endDateTime, appointment.serviceIds)
+  console.log(employee)
+  if (employee.length < 1) {
+    throw Error("Leider haben wir keine freie Mitarbeiter!")
+  }
+
+  return employee[0].id
 }
 
 

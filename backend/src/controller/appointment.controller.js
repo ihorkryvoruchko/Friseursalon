@@ -6,7 +6,7 @@ export async function createAppointment(req, res) {
 
         res.json(appointment)
     } catch (error) {
-        res.status(401).json({message: error.message})
+        res.status(400).json({message: error.message})
     }
 }
 
@@ -17,6 +17,6 @@ export async function cancelAppointment(req, res) {
 
         res.status(204).send()
     } catch (error) {
-        res.status(401).json({message: error.message})
+        res.status(400).json({message: error.message})
     }
 }
