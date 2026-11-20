@@ -1,0 +1,166 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f3efe8;
+  color: #222;
+  line-height: 1.4;
+  padding: 24px 16px;
+}
+
+.container {
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+h1 {
+  font-size: 26px;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  padding: 8px 14px;
+  border: 1px solid #d5cfc4;
+  border-radius: 6px;
+  background: #fff;
+  color: #222;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #faf8f5;
+  border-color: #b8b0a2;
+}
+
+.schedule-card {
+  background: #fbf9f5;
+  border: 1px solid #dfd8cc;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+}
+
+.schedule-table th,
+.schedule-table td {
+  border: 1px solid #e4ddd2;
+  vertical-align: top;
+}
+
+.schedule-table thead th {
+  background: #efe8dc;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.time-col {
+  width: 72px;
+  text-align: center;
+  padding: 8px 6px;
+  font-size: 13px;
+  color: #666;
+  background: #fbf9f5;
+}
+
+.slot-cell {
+  min-height: 54px;
+  height: 54px;
+  padding: 4px;
+  background: #fff;
+}
+
+.appt-card {
+  border-radius: 6px;
+  padding: 7px 9px;
+  font-size: 13px;
+  border-left: 4px solid transparent;
+}
+
+.appt-title {
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.appt-meta {
+  font-size: 12px;
+  color: #444;
+}
+
+.status-booked {
+  background: #f6ded9;
+  border-left-color: #c84b31;
+}
+
+.status-done {
+  background: #dce8e0;
+  border-left-color: #26593a;
+}
+
+.status-cancelled {
+  background: #e6e2dc;
+  border-left-color: #9e968b;
+  color: #777;
+}
+
+.status-cancelled .appt-title,
+.status-cancelled .appt-meta {
+  text-decoration: line-through;
+  color: #777;
+}
+
+.legend {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  font-size: 13px;
+  color: #555;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.info-msg {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
